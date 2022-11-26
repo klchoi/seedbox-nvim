@@ -2,12 +2,6 @@ function _seedbox-nvim_install -e seedbox-nvim_install
   # install nvim
   dpkg -i https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage
   set -U EDITOR nvim
-  
-  # install packer
-  git clone --depth 1 https://github.com/wbthomason/packer.nvim \
-    ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-  nvim -c 'PackerInstall' -c 'q'
 end
 
 function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
@@ -19,7 +13,7 @@ function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
     echo $$var | sed -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
   end
 
-  nvim -c 'PackerUpdate' -c 'q'
+  nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 end
 
 function _seedbox-nvim_uninstall -e seedbox-nvim_uninstall
@@ -80,15 +74,20 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 vim.opt.formatoptions:append { 'r' }
 "
 set -g nvim_2F_lua_2F_plugins_2E_lua "
-local status, packer = pcall(require, 'packer')
-if (not status) then
-  print('Packer is not installed')
-  return
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
 
-vim.cmd [[ packadd packer.nvim ]]
+local packer_bootstrap = ensure_packer()
 
-packer.startup(function(use)
+return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -101,6 +100,10 @@ packer.startup(function(use)
   use { 'https://gitlab.com/madyanov/svart.nvim', as = 'svart' }
   use 'kylechui/nvim-surround'
   use 'terrortylor/nvim-comment'
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
 "
 
