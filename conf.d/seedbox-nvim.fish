@@ -8,12 +8,14 @@ function _seedbox-nvim_install -e seedbox-nvim_install
     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 end
 
-set -l nvim_2F_init_2E_lua "
+function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
+
+  set -l nvim_2F_init_2E_lua "
 require 'base'
 require 'plugins'
 "
 
-set -l nvim_2F_lua_2F_base_2E_lua "
+  set -l nvim_2F_lua_2F_base_2E_lua "
 vim.cmd('autocmd!')
 
 vim.scriptencoding = 'utf-8'
@@ -60,7 +62,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 -- Add asterisks in block comments
 vim.opt.formatoptions:append { 'r' }
 "
-set -l nvim_2F_lua_2F_plugins_2E_lua "
+  set -l nvim_2F_lua_2F_plugins_2E_lua "
 local status, packer = pcall(require, 'packer')
 if (not status) then
   print('Packer is not installed')
@@ -79,21 +81,21 @@ packer.startup(function(use)
 end)
 "
 
-set -l nvim_2F_after_2F_plugin_2F_comment_2E_rc_2E_lua "
+  set -l nvim_2F_after_2F_plugin_2F_comment_2E_rc_2E_lua "
 local status, comment = pcall(require, 'nvim_comment')
 if (not status) then return end
 
 comment.setup(
 "
 
-set -l nvim_2F_after_2F_plugin_2F_surround_2E_rc_2E_lua "
+  set -l nvim_2F_after_2F_plugin_2F_surround_2E_rc_2E_lua "
 local status, surround = pcall(require, 'nvim-surround')
 if (not status) then return end
 
 surround.setup()
 "
 
-set -l nvim_2F_after_2F_plugin_2F_svart_2E_rc_2E_lua "
+  set -l nvim_2F_after_2F_plugin_2F_svart_2E_rc_2E_lua "
 local status, svart = pcall(require, 'svart')
 if (not status) then return end
 
@@ -102,7 +104,7 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'S', '<Cmd>SvartRegex<CR>')   -- begin regex s
 vim.keymap.set({ 'n', 'x', 'o' }, 'gs', '<Cmd>SvartRepeat<CR>') -- repeat with last accepted query
 "
 
-set -l nvim_2F_after_2F_plugin_2F_treesitter_2E_rc_2E_lua "
+  set -l nvim_2F_after_2F_plugin_2F_treesitter_2E_rc_2E_lua "
 local status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if (not status) then return end
 
@@ -121,7 +123,7 @@ treesitter.setup {
 }
 "
 
-set -l nvim_2F_after_2F_plugin_2F_treesitter_2D_textsubjects_2E_rc_2E_lua "
+  set -l nvim_2F_after_2F_plugin_2F_treesitter_2D_textsubjects_2E_rc_2E_lua "
 local status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if (not status) then return end
 
@@ -137,8 +139,6 @@ treesitter.setup {
   }
 }
 "
-
-function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
   set -S
   set -S | while read -L line
     string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
