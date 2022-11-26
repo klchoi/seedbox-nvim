@@ -85,7 +85,7 @@ end)
 local status, comment = pcall(require, 'nvim_comment')
 if (not status) then return end
 
-comment.setup(
+comment.setup()
 "
 
   set -l nvim_2F_after_2F_plugin_2F_surround_2E_rc_2E_lua "
@@ -139,7 +139,7 @@ treesitter.setup {
   }
 }
 "
-  set -S
+
   set -S | while read -L line
     string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
     set -l filename ~/.config/(string unescape -n --style=var $var)
