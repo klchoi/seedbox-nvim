@@ -13,7 +13,7 @@ function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
     echo $$var | sed -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
   end
 
-  nvim -c 'autocmd User PackerComplete quitall' -c 'PackerUpdate'
+  nvim -c 'autocmd User PackerComplete quitall'
 end
 
 function _seedbox-nvim_uninstall -e seedbox-nvim_uninstall
