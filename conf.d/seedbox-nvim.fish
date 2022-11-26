@@ -19,7 +19,7 @@ function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
 end
 
 function _seedbox-nvim_uninstall -e seedbox-nvim_uninstall
-  rm -rf ~/.config/nvim ~/.local/nvim
+  rm -rf ~/.config/nvim ~/.local/share/nvim
   dpkg -r nvim
 end
 
