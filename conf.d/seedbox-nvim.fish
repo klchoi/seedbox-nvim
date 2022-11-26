@@ -145,6 +145,6 @@ treesitter.setup {
     set -l filename ~/.config/(string unescape -n --style=var $var)
     echo '>' $filename
     mkdir -p (path dirname $filename)
-    echo $$var | sed -i -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
+    echo $$var | sed -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
   end
 end
