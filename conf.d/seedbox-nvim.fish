@@ -134,9 +134,11 @@ set -g nvim_2F_after_2F_plugin_2F_treesitter_2E_rc_2E_lua "
 local status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if (not status) then return end
 
+local is_headless = #vim.api.nvim_list_uis() == 0
+
 treesitter.setup {
   ensure_installed = 'all',
-  auto_install = #vim.api.nvim_list_uis() != 0,
+  auto_install = (not is_headless),
   highlight = {
     enable = true,
   },
