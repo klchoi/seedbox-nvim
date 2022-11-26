@@ -98,7 +98,8 @@ return require('packer').startup(function(use)
   }
   use {
     'RRethy/nvim-treesitter-textsubjects',
-    requires = { 'nvim-treesitter/nvim-treesitter' }
+    requires = { 'nvim-treesitter/nvim-treesitter' },
+    after = 'nvim-treesitter'
   }
   use { 'https://gitlab.com/madyanov/svart.nvim', as = 'svart' }
   use 'kylechui/nvim-surround'
