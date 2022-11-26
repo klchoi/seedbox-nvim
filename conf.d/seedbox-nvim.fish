@@ -1,4 +1,4 @@
-function _seedbox-nvim_install -e seebox-nvim_install
+function _seedbox-nvim_install -e seedbox-nvim_install
   # install nvim
   dpkg -i https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage
   set -U EDITOR nvim
@@ -8,7 +8,7 @@ function _seedbox-nvim_install -e seebox-nvim_install
     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 end
 
-function _seedbox-nvim_config -e seebox-nvim_install -e seedbox-nvim_update
+function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
   set -S | while read -L line
     string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
     set -l filename ~/.config/(string unescape -n --style=var $var)
