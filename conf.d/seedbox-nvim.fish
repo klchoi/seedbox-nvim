@@ -9,6 +9,8 @@ function _seedbox-nvim_install -e seedbox-nvim_install
 end
 
 function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
+  echo diz | bold | yellow
+  set -S
   set -S | while read -L line
     string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
     set -l filename ~/.config/(string unescape -n --style=var $var)
