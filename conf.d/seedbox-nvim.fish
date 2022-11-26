@@ -7,7 +7,7 @@ function _seedbox-nvim_install -e seedbox-nvim_install
   git clone --depth 1 https://github.com/wbthomason/packer.nvim \
     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-  nvim -c 'PackerInstall' -c '!q'
+  nvim -c 'PackerInstall' -c 'q'
 end
 
 function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
@@ -19,7 +19,7 @@ function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
     echo $$var | sed -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
   end
 
-  nvim -c 'PackerUpdate' -c '!q'
+  nvim -c 'PackerUpdate' -c 'q'
 end
 
 function _seedbox-nvim_uninstall -e seedbox-nvim_uninstall
@@ -90,7 +90,13 @@ vim.cmd [[ packadd packer.nvim ]]
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
   use 'RRethy/nvim-treesitter-textsubjects'
   use { 'https://gitlab.com/madyanov/svart.nvim', as = 'svart' }
   use 'kylechui/nvim-surround'
