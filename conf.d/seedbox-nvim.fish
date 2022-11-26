@@ -8,18 +8,6 @@ function _seedbox-nvim_install -e seedbox-nvim_install
     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 end
 
-function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
-  echo diz | bold | yellow
-  set -S
-  set -S | while read -L line
-    string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
-    set -l filename ~/.config/(string unescape -n --style=var $var)
-    echo '>' $filename
-    mkdir -p (path dirname $filename)
-    echo $$var > $filename
-  end
-end
-
 set -l nvim_2F_init_2E_lua "
 require 'base'
 require 'plugins'
@@ -149,3 +137,14 @@ treesitter.setup {
   }
 }
 "
+
+function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
+  set -S
+  set -S | while read -L line
+    string match -q -r '^\$(?<var>nvim_\w+)' -- $line || continue
+    set -l filename ~/.config/(string unescape -n --style=var $var)
+    echo '>' $filename
+    mkdir -p (path dirname $filename)
+    echo $$var > $filename
+  end
+end
