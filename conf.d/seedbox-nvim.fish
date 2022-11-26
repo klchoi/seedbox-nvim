@@ -13,7 +13,7 @@ function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
     echo $$var | sed -e '/./,$!d' -e:a -e '/^\n*$/{$d;N;ba' -e '}' > $filename
   end
 
-  nvim -c 'autocmd User PackerComplete quitall'
+  nvim --headless -c 'autocmd User PackerComplete quitall'
 end
 
 function _seedbox-nvim_uninstall -e seedbox-nvim_uninstall
@@ -136,8 +136,7 @@ if (not status) then return end
 
 treesitter.setup {
   ensure_installed = 'all',
-  sync_install = true,
-  auto_install = true,
+  auto_install = #vim.api.nvim_list_uis() != 0,
   highlight = {
     enable = true,
   },
