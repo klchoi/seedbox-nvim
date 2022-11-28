@@ -1,7 +1,7 @@
 function _seedbox-nvim_install -e seedbox-nvim_install
   # install nvim
   dpkg -i https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage
-  set -U EDITOR nvim
+  set -Ux EDITOR nvim
 end
 
 function _seedbox-nvim_config -e seedbox-nvim_install -e seedbox-nvim_update
