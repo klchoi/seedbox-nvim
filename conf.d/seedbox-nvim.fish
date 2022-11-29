@@ -74,6 +74,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 -- Add asterisks in block comments
 vim.opt.formatoptions:append { 'r' }
 "
+
 set -g nvim_2F_lua_2F_plugins_2E_lua "
 local ensure_packer = function()
   local fn = vim.fn
